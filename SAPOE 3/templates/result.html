@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block title %}Result - OptiCrop Optimization Engine{% endblock %}
+
+{% block content %}
+<div class="result-container">
+    
+    <!-- Professional Result Card -->
+    <div class="result-card">
+        
+        <!-- Header Banner -->
+        <div class="result-banner">
+            <div>
+                <p>RECOMMENDED OPTIMAL CROP</p>
+                <h2>{{ crop.name }}</h2>
+            </div>
+            <span class="badge badge-outline"><i class="fa-solid fa-seedling"></i> {{ crop.type }}</span>
+        </div>
+        
+        <!-- Main Prediction Display -->
+        <div class="result-main">
+            <!-- Left Side: Circular Suitability Gauge -->
+            <div class="gauge-wrapper">
+                <div class="gauge-svg-container">
+                    <svg width="200" height="200" viewBox="0 0 200 200">
+                        <circle class="gauge-ring" cx="100" cy="100" r="80" />
+                        <circle class="gauge-fill" cx="100" cy="100" r="80" 
+                                stroke-dasharray="502.65" stroke-dashoffset="502.65" 
+                                data-percent="{{ suitability }}" />
+                    </svg>
+                    <div class="gauge-text">
+                        <span class="gauge-percent">{{ suitability }}%</span>
+                        <span class="gauge-label">Confidence</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Right Side: Details & Classification Status -->
+            <div class="result-info">
+                <span class="status-badge {{ status_class }}">
+                    <i class="fa-solid fa-circle-check"></i> {{ status }}
+                </span>
+                <p class="crop-desc">{{ crop.description }}</p>
+                
+                <div class="meta-stats">
+                    <div class="meta-stat-item">
+                        <span class="meta-stat-label">Typical Season</span>
+                        <span class="meta-stat-value">{{ crop.season }}</span>
+                    </div>
+                    <div class="meta-stat-item">
+                        <span class="meta-stat-label">Growth Cycle</span>
+                        <span class="meta-stat-value">{{ crop.duration }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Detailed Diagnostics Section -->
+        <div class="diagnostics-section">
+            <h3 class="diagnostics-title"><i class="fa-solid fa-chart-simple"></i> Diagnostic Report & Soil Amendments</h3>
+            <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 20px;">
+                Comparison between your soil inputs and the ideal growing parameters for <strong>{{ crop.name }}</strong>:
+            </p>
+            
+            <div class="advice-cards">
+                {% for diagnostic in diagnostics %}
+                <div class="advice-card {% if diagnostic.status != 'Perfect Fit' and diagnostic.status != 'Optimal' %}alert-active{% endif %}">
+                    <div class="advice-header">
+                        <span class="advice-param">
+                            <i class="fa-solid fa-{{ diagnostic.icon }}"></i> {{ diagnostic.parameter }}
+                        </span>
+                        <span class="advice-status {% if diagnostic.status == 'Deficient' or diagnostic.status == 'Too Acidic' or diagnostic.status == 'Low Water' or diagnostic.status == 'Too Cold' or diagnostic.status == 'Too Dry' %}low{% elif diagnostic.status == 'Perfect Fit' or diagnostic.status == 'Optimal' %}optimal{% else %}med{% endif %}">
+                            {{ diagnostic.status }}
+                        </span>
+                    </div>
+                    <div class="advice-content">
+                        <p>{{ diagnostic.advice }}</p>
+                    </div>
+                    <div class="advice-ranges">
+                        <div>Your input: <strong>{{ diagnostic.input }}</strong></div>
+                        <div>Ideal range: <strong>{{ diagnostic.ideal }}</strong></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            
+            <!-- Crop Management Tips -->
+            {% if crop.tips %}
+            <div class="tips-section">
+                <h4 class="tips-title"><i class="fa-solid fa-lightbulb"></i> Agronomic Action Items for {{ crop.name }}</h4>
+                <ul class="tips-list">
+                    {% for tip in crop.tips %}
+                    <li>{{ tip }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            {% endif %}
+            
+        </div>
+    </div>
+    
+    <!-- Action buttons -->
+    <div class="result-actions">
+        <a href="{{ url_for('recommend') }}" class="btn btn-secondary">
+            <i class="fa-solid fa-arrow-left"></i> Re-test Soil
+        </a>
+        <button onclick="window.print()" class="btn btn-primary">
+            <i class="fa-solid fa-print"></i> Print Soil Report
+        </button>
+    </div>
+</div>
+{% endblock %}

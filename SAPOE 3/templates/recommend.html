@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+
+{% block title %}Recommend Crop - OptiCrop Optimization Engine{% endblock %}
+
+{% block content %}
+<div class="recommend-layout">
+    
+    <!-- Left Column: Input Form -->
+    <div class="form-card">
+        <div class="form-header">
+            <h2>Soil & Climate Metrics</h2>
+            <p>Input your soil nutrient analysis and local weather metrics below to predict the optimal crop.</p>
+        </div>
+        
+        {% if error %}
+        <div style="background-color: var(--color-status-low-bg); color: var(--color-status-low); padding: 12px 16px; border-radius: var(--border-radius-sm); margin-bottom: 20px; font-weight: 500;">
+            <i class="fa-solid fa-triangle-exclamation"></i> {{ error }}
+        </div>
+        {% endif %}
+        
+        <form id="recommendForm" method="POST" action="{{ url_for('recommend') }}">
+            <div class="form-grid">
+                
+                <!-- Soil Nutrients Section Header -->
+                <div class="form-group full-width" style="margin-top: 10px; border-bottom: 2px solid var(--color-bg-mint); padding-bottom: 5px;">
+                    <h3 style="font-size: 1.1rem; color: var(--color-primary); display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-vial"></i> Soil Nutrients
+                    </h3>
+                </div>
+                
+                <!-- Nitrogen (N) -->
+                <div class="form-group">
+                    <label for="N">
+                        Nitrogen (N)
+                        <span class="form-help">(Ideal: 0 - 140)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="N" name="N" min="0" max="140" placeholder="e.g. 90" required value="90">
+                        <span class="unit-tag">mg/kg</span>
+                    </div>
+                </div>
+                
+                <!-- Phosphorus (P) -->
+                <div class="form-group">
+                    <label for="P">
+                        Phosphorus (P)
+                        <span class="form-help">(Ideal: 5 - 145)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="P" name="P" min="5" max="145" placeholder="e.g. 42" required value="42">
+                        <span class="unit-tag">mg/kg</span>
+                    </div>
+                </div>
+                
+                <!-- Potassium (K) -->
+                <div class="form-group">
+                    <label for="K">
+                        Potassium (K)
+                        <span class="form-help">(Ideal: 5 - 205)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="K" name="K" min="5" max="205" placeholder="e.g. 43" required value="43">
+                        <span class="unit-tag">mg/kg</span>
+                    </div>
+                </div>
+                
+                <!-- Space buffer -->
+                <div class="form-group"></div>
+                
+                <!-- Climate & Environmental Section Header -->
+                <div class="form-group full-width" style="margin-top: 20px; border-bottom: 2px solid var(--color-bg-mint); padding-bottom: 5px;">
+                    <h3 style="font-size: 1.1rem; color: var(--color-primary); display: flex; align-items: center; gap: 8px;">
+                        <i class="fa-solid fa-cloud-sun"></i> Environmental Factors
+                    </h3>
+                </div>
+                
+                <!-- Temperature -->
+                <div class="form-group">
+                    <label for="temp">
+                        Temperature
+                        <span class="form-help">(Ideal: 10°C - 50°C)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="temp" name="temp" min="10" max="50" step="0.01" placeholder="e.g. 21" required value="21">
+                        <span class="unit-tag">°C</span>
+                    </div>
+                </div>
+                
+                <!-- Humidity -->
+                <div class="form-group">
+                    <label for="humidity">
+                        Humidity
+                        <span class="form-help">(Ideal: 15% - 100%)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="humidity" name="humidity" min="15" max="100" step="0.01" placeholder="e.g. 82" required value="82">
+                        <span class="unit-tag">%</span>
+                    </div>
+                </div>
+                
+                <!-- pH Level -->
+                <div class="form-group">
+                    <label for="pH">
+                        pH Level
+                        <span class="form-help">(Ideal: 3.5 - 10.0)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="pH" name="pH" min="3.5" max="10" step="0.01" placeholder="e.g. 6.5" required value="6.5">
+                        <span class="unit-tag">pH</span>
+                    </div>
+                </div>
+                
+                <!-- Rainfall -->
+                <div class="form-group">
+                    <label for="rainfall">
+                        Rainfall
+                        <span class="form-help">(Ideal: 20mm - 300mm)</span>
+                    </label>
+                    <div class="input-container">
+                        <input type="number" id="rainfall" name="rainfall" min="20" max="300" step="0.01" placeholder="e.g. 200" required value="200">
+                        <span class="unit-tag">mm</span>
+                    </div>
+                </div>
+                
+            </div>
+            
+            <div class="form-submit-area">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i> Recommend Crop
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <!-- Right Column: Preset Toolbars -->
+    <div class="sidebar-card">
+        <h3><i class="fa-solid fa-circle-play"></i> Test Presets</h3>
+        <p style="font-size: 0.85rem; color: var(--color-text-muted); margin-bottom: 12px;">
+            Click any test profile to automatically populate the form with realistic crop data parameters.
+        </p>
+        
+        <div class="presets-container">
+            <!-- Preset: Rice (Example Input) -->
+            <button class="preset-btn" type="button" 
+                    data-n="90" data-p="42" data-k="43" data-temp="21" data-humidity="82" data-ph="6.5" data-rainfall="200">
+                <span class="preset-title">Rice Preset (Example)</span>
+                <span class="preset-desc">N: 90, P: 42, K: 43, Temp: 21°C, Humid: 82%, pH: 6.5, Rain: 200mm</span>
+            </button>
+            
+            <!-- Preset: Chickpea -->
+            <button class="preset-btn" type="button" 
+                    data-n="30" data-p="60" data-k="80" data-temp="19" data-humidity="17" data-ph="7.2" data-rainfall="40">
+                <span class="preset-title">Chickpea Preset</span>
+                <span class="preset-desc">N: 30, P: 60, K: 80, Temp: 19°C, Humid: 17%, pH: 7.2, Rain: 40mm</span>
+            </button>
+            
+            <!-- Preset: Cotton -->
+            <button class="preset-btn" type="button" 
+                    data-n="120" data-p="40" data-k="20" data-temp="24" data-humidity="80" data-ph="6.5" data-rainfall="80">
+                <span class="preset-title">Cotton Preset</span>
+                <span class="preset-desc">N: 120, P: 40, K: 20, Temp: 24°C, Humid: 80%, pH: 6.5, Rain: 80mm</span>
+            </button>
+            
+            <!-- Preset: Coffee -->
+            <button class="preset-btn" type="button" 
+                    data-n="100" data-p="25" data-k="30" data-temp="25" data-humidity="58" data-ph="6.8" data-rainfall="170">
+                <span class="preset-title">Coffee Preset</span>
+                <span class="preset-desc">N: 100, P: 25, K: 30, Temp: 25°C, Humid: 58%, pH: 6.8, Rain: 170mm</span>
+            </button>
+        </div>
+    </div>
+    
+</div>
+
+<!-- Loading Overlay -->
+<div id="loadingOverlay" class="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">OptiCrop AI is analyzing soil metrics...</div>
+    <p style="color: var(--color-text-muted); font-size: 0.9rem;">Running Random Forest Classifier Inference</p>
+</div>
+{% endblock %}

@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block title %}Home - OptiCrop Soil Optimization Engine{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero">
+    <div class="hero-text">
+        <h1>Smart Agricultural Optimization</h1>
+        <p>
+            Maximize your farm's production with the <strong>Smart Agricultural Production Optimization Engine (OptiCrop)</strong>. 
+            By leveraging advanced Machine Learning algorithms, OptiCrop analyzes critical soil chemical parameters and climatic indicators 
+            to predict and recommend the most suitable crop for your fields.
+        </p>
+        <div class="hero-actions">
+            <a href="{{ url_for('recommend') }}" class="btn btn-primary">
+                <i class="fa-solid fa-seedling"></i> Get Crop Recommendation
+            </a>
+            <a href="{{ url_for('about') }}" class="btn btn-secondary">
+                Learn How It Works
+            </a>
+        </div>
+    </div>
+    
+    <div class="hero-graphic">
+        <!-- SVG Growing Plant Illustration with Micro-animations -->
+        <svg class="plant-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
+            <!-- Soil Base -->
+            <path d="M50 400 Q 250 350 450 400 L 450 450 L 50 450 Z" fill="#8d5b4c" opacity="0.9" />
+            <path d="M80 410 Q 250 380 420 410 L 420 440 L 80 440 Z" fill="#70443c" />
+            
+            <!-- Pot -->
+            <path d="M180 430 L 320 430 L 300 480 L 200 480 Z" fill="#c77d58" />
+            <rect x="170" y="420" width="160" height="15" rx="5" fill="#a05e3b" />
+            
+            <!-- Main Stem -->
+            <path d="M250 420 Q 240 300 250 180" fill="none" stroke="#2d6a4f" stroke-width="12" stroke-linecap="round" />
+            <path d="M250 200 Q 265 140 255 100" fill="none" stroke="#40916c" stroke-width="8" stroke-linecap="round" class="pulse-element" />
+            
+            <!-- Leaves Left -->
+            <path d="M245 330 Q 180 320 160 270 Q 210 275 245 310 Z" fill="#52b788" class="pulse-element" />
+            <path d="M247 250 Q 190 220 180 160 Q 225 180 248 225 Z" fill="#74c69d" class="pulse-element" />
+            
+            <!-- Leaves Right -->
+            <path d="M255 350 Q 320 340 340 290 Q 290 295 255 330 Z" fill="#2d6a4f" class="pulse-element" />
+            <path d="M253 270 Q 310 240 320 180 Q 275 200 253 245 Z" fill="#40916c" class="pulse-element" />
+            
+            <!-- Sun / Glow background -->
+            <circle cx="250" cy="150" r="120" fill="#d8f3dc" opacity="0.4" style="z-index:-1;" />
+            <circle cx="250" cy="150" r="80" fill="#d8f3dc" opacity="0.6" style="z-index:-1;" />
+            
+            <!-- Little Buds -->
+            <circle cx="255" cy="100" r="10" fill="#ffb703" class="pulse-element" />
+        </svg>
+    </div>
+</section>
+
+<!-- Parameters Explained Section -->
+<section class="features-section">
+    <h2 class="features-title">Parameters Analyzed by OptiCrop</h2>
+    <div class="features-grid">
+        <!-- Nitrogen (N) -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-flask-vial fa-lg"></i>
+            </div>
+            <h3>Nitrogen (N)</h3>
+            <p>Crucial for vegetative crop growth, leaf development, and chlorophyll production which triggers photosynthesis.</p>
+        </div>
+        <!-- Phosphorus (P) -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-dna fa-lg"></i>
+            </div>
+            <h3>Phosphorus (P)</h3>
+            <p>Promotes healthy root structures, flowering density, and seed creation. Critical during early growth cycles.</p>
+        </div>
+        <!-- Potassium (K) -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-shield-halved fa-lg"></i>
+            </div>
+            <h3>Potassium (K)</h3>
+            <p>Enhances disease resistance, controls stomata opening (water retention), and improves product quality and yield.</p>
+        </div>
+        <!-- Temperature -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-temperature-half fa-lg"></i>
+            </div>
+            <h3>Temperature</h3>
+            <p>Defines seasonal suitability. Affects the rate of photosynthesis, transpiration, and general metabolic activities.</p>
+        </div>
+        <!-- Humidity -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-droplet fa-lg"></i>
+            </div>
+            <h3>Humidity</h3>
+            <p>Regulates transpiration rates. High humidity impacts fungal development, while dry air increases water requirements.</p>
+        </div>
+        <!-- pH Level -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-gauge-simple-high fa-lg"></i>
+            </div>
+            <h3>pH Level</h3>
+            <p>Determines nutrient solubility and soil microbial activity. Most crops thrive in neutral to slightly acidic conditions (5.5 - 7.0).</p>
+        </div>
+        <!-- Rainfall -->
+        <div class="feature-card">
+            <div class="feature-icon-wrapper">
+                <i class="fa-solid fa-cloud-showers-heavy fa-lg"></i>
+            </div>
+            <h3>Rainfall</h3>
+            <p>The primary source of moisture. Excess water can cause root oxygen depletion, while low rainfall triggers drought stress.</p>
+        </div>
+    </div>
+</section>
+{% endblock %}

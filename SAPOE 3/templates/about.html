@@ -1,0 +1,158 @@
+{% extends "base.html" %}
+
+{% block title %}About - OptiCrop Soil Engine{% endblock %}
+
+{% block content %}
+<div class="result-container" style="max-width: 1000px;">
+    
+    <!-- About Header -->
+    <div class="about-header">
+        <h1>About OptiCrop</h1>
+        <p>Smart Agricultural Production Optimization Engine (OptiCrop) is a data-driven agronomy advisor powered by Machine Learning.</p>
+    </div>
+    
+    <!-- About Core Grid -->
+    <div class="about-grid">
+        
+        <!-- Left Side: System & Parameters details -->
+        <div>
+            <!-- Project Purpose -->
+            <div class="about-card">
+                <h3>Project Objective</h3>
+                <p>
+                    Farmers face significant uncertainty due to changing environmental conditions, depleting soil nutrition, and shifting weather patterns. 
+                    OptiCrop aims to mitigate this risk by applying a lightweight, fast, and highly accurate classification model that matches the chemical 
+                    parameters of the soil (N, P, K, pH) and the ambient environment (Temperature, Humidity, Rainfall) to the crop profile that will yield the 
+                    highest probability of success.
+                </p>
+                <p>
+                    This is designed as a college demonstration project, showcasing the practical integration of Python-based Machine Learning models (Scikit-Learn) 
+                    with standard web frameworks (Flask) to produce a fast, responsive, and easy-to-understand farm helper.
+                </p>
+            </div>
+            
+            <!-- Parameters Range table -->
+            <div class="about-card">
+                <h3>Features & Input Boundaries</h3>
+                <p>The system evaluates 7 distinct inputs to calculate suitability matches. The bounds are set based on agricultural feasibility:</p>
+                
+                <table class="parameter-table">
+                    <thead>
+                        <tr>
+                            <th>Feature</th>
+                            <th>Unit</th>
+                            <th>Feasible Range</th>
+                            <th>Primary Agricultural Role</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Nitrogen (N)</strong></td>
+                            <td>mg/kg (ppm)</td>
+                            <td>0 - 140</td>
+                            <td>Leaf growth, chlorophyll formation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Phosphorus (P)</strong></td>
+                            <td>mg/kg (ppm)</td>
+                            <td>5 - 145</td>
+                            <td>Root structure, flowering, early cell division</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Potassium (K)</strong></td>
+                            <td>mg/kg (ppm)</td>
+                            <td>5 - 205</td>
+                            <td>Disease resistance, water movement control</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Temperature</strong></td>
+                            <td>°C</td>
+                            <td>10.0 - 50.0</td>
+                            <td>Determines growth speed & metabolic activity</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Humidity</strong></td>
+                            <td>%</td>
+                            <td>15.0 - 100.0</td>
+                            <td>Controls transpiration rate (water loss)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>pH Level</strong></td>
+                            <td>pH Scale</td>
+                            <td>3.5 - 10.0</td>
+                            <td>Dictates nutrient uptake capability in roots</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rainfall</strong></td>
+                            <td>mm</td>
+                            <td>20.0 - 300.0</td>
+                            <td>Determines irrigation requirement</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Right Side: Model details -->
+        <div>
+            <!-- Machine Learning Model Stats -->
+            <div class="about-card">
+                <h3>Machine Learning Core</h3>
+                <p>
+                    We implement an ensemble decision classifier using the <strong>Random Forest Algorithm</strong>. 
+                    Unlike a single Decision Tree which is prone to overfitting, Random Forest aggregates predictions from multiple decision paths to ensure stability.
+                </p>
+                <ul class="model-stat-list">
+                    <li>
+                        <span class="stat-name">Algorithm</span>
+                        <span class="stat-val">Random Forest</span>
+                    </li>
+                    <li>
+                        <span class="stat-name">Estimators (Trees)</span>
+                        <span class="stat-val">50</span>
+                    </li>
+                    <li>
+                        <span class="stat-name">Classes (Crops)</span>
+                        <span class="stat-val">22</span>
+                    </li>
+                    <li>
+                        <span class="stat-name">Max Tree Depth</span>
+                        <span class="stat-val">12</span>
+                    </li>
+                    <li>
+                        <span class="stat-name">Features Used</span>
+                        <span class="stat-val">7</span>
+                    </li>
+                    <li>
+                        <span class="stat-name">Target Accuracy</span>
+                        <span class="stat-val">&gt; 99%</span>
+                    </li>
+                    <li>
+                        <span class="stat-name">Model File Size</span>
+                        <span class="stat-val">~250 KB</span>
+                    </li>
+                </ul>
+            </div>
+            
+            <!-- Tech Stack details -->
+            <div class="about-card">
+                <h3>Technologies Used</h3>
+                <p style="font-size: 0.9rem; margin-bottom: 8px;"><strong>Backend:</strong> Python, Flask Server</p>
+                <p style="font-size: 0.9rem; margin-bottom: 8px;"><strong>ML Engine:</strong> NumPy, Pandas, Scikit-learn</p>
+                <p style="font-size: 0.9rem; margin-bottom: 8px;"><strong>Frontend:</strong> HTML5, Custom CSS Variables, Javascript (ES6)</p>
+                <p style="font-size: 0.9rem;"><strong>Fonts & Icons:</strong> FontAwesome, Google Fonts (Outfit, Inter)</p>
+            </div>
+        </div>
+        
+    </div>
+    
+    <!-- CTA Call to Action -->
+    <div class="about-cta">
+        <h2>Ready to optimize your crop yield?</h2>
+        <p>Run a soil nutrient diagnostics report using our trained machine learning classifier model in just a few seconds.</p>
+        <a href="{{ url_for('recommend') }}" class="btn btn-secondary" style="background-color: var(--color-white); color: var(--color-primary-dark);">
+            <i class="fa-solid fa-seedling"></i> Start Recommendation
+        </a>
+    </div>
+</div>
+{% endblock %}
